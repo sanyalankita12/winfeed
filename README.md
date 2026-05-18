@@ -77,3 +77,20 @@ http://127.0.0.1:5000
 
 ---
 *Built with a lot of learning and debugging!*
+
+## Screenshots
+
+### Home Page:-
+![Home](screenshots/home.png)
+
+### Register Page:-
+![Register](screenshots/register.png)
+
+### Login Page:-
+![Login](screenshots/login.png)
+
+### Feed page:-
+![Feed](screenshots/feed.png)
+
+### New Post Page:-
+![NewPost](screenshots/new_post.png)
