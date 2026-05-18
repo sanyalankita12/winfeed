@@ -21,7 +21,7 @@ class Post(db.Model):
     content=db.Column(db.Text,nullable=False)
     date_posted=db.Column(db.DateTime,nullable=False,default=datetime.now())
     user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
-    reactions=db.relationship('Reaction', backref='post', lazy=True)
+    reactions=db.relationship('Reaction', backref='post', lazy=True,cascade='all, delete-orphan')
     def __repr__(self):
         return f"Post('{self.content}','{self.date_posted}')"
 
@@ -29,4 +29,4 @@ class Reaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     emoji = db.Column(db.String(10),nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
-    post_id=db.Column(db.Integer,db.ForeignKey('post.id'),nullable=False)
+    post_id=db.Column(db.Integer,db.ForeignKey('post.id',ondelete='CASCADE'),nullable=False)
