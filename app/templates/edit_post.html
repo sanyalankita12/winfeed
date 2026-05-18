@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="win-card card p-4">
+    <h3 class="mb-4">Edit Your Win! ✏️</h3>
+    <form method="POST"
+          action="{{ url_for('main.edit_post', post_id=post.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div class="mb-3">
+            <label class="form-label">Content</label>
+            <textarea name="content"
+                      class="form-control"
+                      rows="4">{{ post.content }}</textarea>
+        </div>
+
+        <button type="submit"
+                class="btn btn-success w-100">
+            Update Post
+        </button>
+
+        <a href="{{ url_for('main.home') }}"
+           class="btn btn-outline-secondary w-100 mt-2">
+            Cancel
+        </a>
+    </form>
+</div>
+
+{% endblock %}

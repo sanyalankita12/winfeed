@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% if current_user.is_authenticated %}
+    <a href="{{ url_for('main.new_post') }}"
+       class="btn btn-success w-100 mb-4">
+        + Share your win today!
+    </a>
+{% endif %}
+
+{% for post in posts %}
+<div class="win-card card p-4 mb-3">
+    <div class="d-flex justify-content-between mb-2">
+        <strong>{{ post.author.username }}</strong>
+        <small class="text-muted">
+            {{ post.date_posted.strftime('%B %d, %Y at %I:%M %p') }}
+        </small>
+    </div>
+    <p class="mb-0">{{ post.content }}</p>
+
+
+    {% if current_user.is_authenticated %}
+    <div class="d-flex gap-2 mb-3">
+        {% for emoji in ['❤️', '🔥', '👏'] %}
+            {% set count = post.reactions|selectattr('emoji','equalto',emoji)|list|length %}
+            {% set user_reacted = post.reactions|selectattr('emoji','equalto',emoji)|selectattr('user_id','equalto',current_user.id)|list|length %}
+            <form method="POST"
+                  action="{{ url_for('main.react_post', post_id=post.id, emoji=emoji) }}"
+                  style="display:inline;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit"
+                        class="btn btn-sm {% if user_reacted %}btn-success{% else %}btn-outline-secondary{% endif %}">
+                    {{ emoji }} {% if count > 0 %}{{ count }}{% endif %}
+                </button>
+            </form>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if post.author == current_user %}
+    <div class="mt-3 d-flex gap-2">
+        <a href="{{ url_for('main.edit_post', post_id=post.id) }}"
+           class="btn btn-sm btn-outline-secondary">Edit</a>
+
+
+        <form method="POST" action="{{ url_for('main.delete_post', post_id=post.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-sm btn-outline-danger"
+                    onclick="return confirm('Delete this post?')">
+                Delete
+            </button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% else %}
+<div class="text-center text-muted mt-5">
+    <h4>No wins yet!</h4>
+    <p>Be the first to share your win today 🏆</p>
+</div>
+{% endfor %}
+
+{% endblock %}

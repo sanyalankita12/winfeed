@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="win-card card p-4">
+    <h3 class="mb-4">Share Your Win! 🏆</h3>
+    <form method="POST" action="{{ url_for('main.new_post') }}">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.content.label(class="form-label") }}
+            {{ form.content(class="form-control", rows=4, 
+               placeholder="What did you achieve today?") }}
+            {% for error in form.content.errors %}
+                <small class="text-danger">{{ error }}</small>
+            {% endfor %}
+        </div>
+
+        {{ form.submit(class="btn btn-success w-100") }}
+    </form>
+</div>
+
+{% endblock %}
