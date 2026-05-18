@@ -59,8 +59,7 @@ def logout():
 @login_required
 def new_post():
     form = PostForm()
-    print("FORM SUBMITTED:", form.validate_on_submit())
-    print("FORM ERRORS:", form.errors)
+
     if form.validate_on_submit():
         post = Post(content=form.content.data, author=current_user)
         db.session.add(post)
@@ -69,7 +68,7 @@ def new_post():
         return redirect(url_for('main.home'))
     return render_template('new_post.html', form=form)
 
-@main.route('/post/<int:post_id>', methods=['POST'])
+@main.route('/post/<int:post_id>/delete', methods=['POST'])
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
