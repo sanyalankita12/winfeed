@@ -64,12 +64,24 @@ python run.py
 
 http://127.0.0.1:5000
 
+## Note
+This project was built while learning Flask from scratch.
+The backend logic (routes, database models, authentication, 
+security) was written and understood by me independently.
+Frontend templates were kept minimal as the focus of this 
+project was backend development with Flask and SQLAlchemy.
+
+Assistance(templates from bootstrap,and AI assistance was used for the templates) was used as a learner to understand
+concepts and debug errors.
+
 ## What I Learned
 - Building a full stack web app with Flask from scratch
-- Database design with SQLAlchemy
-- User authentication and session management
+- Database design with SQLAlchemy (One-to-Many, relationships)
+- User authentication and session management with Flask-Login
 - Security best practices (password hashing, CSRF protection)
+- REST-like routing and Blueprint organization
 - Git and GitHub workflow
+- Debugging and problem solving independently
 
 ## Author
 **Ankita Sanyal**
