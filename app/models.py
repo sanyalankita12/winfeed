@@ -17,13 +17,27 @@ class User(db.Model,UserMixin):
         return f"User('{self.username}','{self.email}')"
 
 class Post(db.Model):
-    id=db.Column(db.Integer,primary_key=True)
-    content=db.Column(db.Text,nullable=False)
-    date_posted=db.Column(db.DateTime,nullable=False,default=datetime.now)
-    user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
-    reactions=db.relationship('Reaction', backref='post', lazy=True,cascade='all, delete-orphan')
+    id          = db.Column(db.Integer, primary_key=True)
+    content     = db.Column(db.Text, nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    user_id     = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    reactions   = db.relationship('Reaction', backref='post', lazy=True, cascade='all, delete-orphan')
+
+    def reaction_count(self, emoji):
+        return Reaction.query.filter_by(
+            post_id=self.id,
+            emoji=emoji
+        ).count()
+
+    def user_reacted(self, emoji, user_id):
+        return Reaction.query.filter_by(
+            post_id=self.id,
+            emoji=emoji,
+            user_id=user_id
+        ).first() is not None
+
     def __repr__(self):
-        return f"Post('{self.content}','{self.date_posted}')"
+        return f"Post('{self.content}', '{self.date_posted}')"
 
 class Reaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
