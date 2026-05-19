@@ -23,7 +23,7 @@
     + Share your win today!
 </a>
 
-{% for post in posts %}
+{% for post in posts.items %}
 <div class="win-card card p-4 mb-3">
     <div class="d-flex justify-content-between mb-2">
         <strong>{{ post.author.username }}</strong>
@@ -70,5 +70,31 @@
 {% endfor %}
 
 {% endif %}
+    {% if posts.has_prev or posts.has_next %}
+<div class="d-flex justify-content-between mt-4">
 
+    {% if posts.has_prev %}
+        <a href="{{ url_for('main.home', page=posts.prev_num) }}"
+           class="btn btn-outline-success">
+            ← Newer Posts
+        </a>
+    {% else %}
+        <span></span>
+    {% endif %}
+
+    <small class="text-muted align-self-center">
+        Page {{ posts.page }} of {{ posts.pages }}
+    </small>
+
+    {% if posts.has_next %}
+        <a href="{{ url_for('main.home', page=posts.next_num) }}"
+           class="btn btn-outline-success">
+            Older Posts →
+        </a>
+    {% else %}
+        <span></span>
+    {% endif %}
+
+</div>
+{% endif %}
 {% endblock %}
