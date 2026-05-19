@@ -1,6 +1,11 @@
 # WinFeed 🏆
 > A social platform where people share their daily achievements and wins!
 
+## Try it Out:-
+https://winfeed.up.railway.app/
+
+
+
 ## About The Project
 WinFeed is a full-stack(mainly focused on backend) web application built with Flask where users can:
 - Share their daily wins and achievements 🎉
